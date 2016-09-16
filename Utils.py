@@ -1,18 +1,19 @@
 import pygame
 import constants
+import socket
 
 class SpriteSheet():
     sprite_sheet = None
-    
+
     def __init__(self, file_name):
         self.sprite_sheet = pygame.image.load(file_name).convert()
-    
+
     def getImage(self, x, y, width, height):
         image = pygame.Surface([width, height]).convert()
         image.blit(self.sprite_sheet, (0, 0), (x, y, width, height))
         image.set_colorkey(constants.COLORKEY)
         return image
-    
+
 class TextToScreen(object):
     def __init__(self, msg, color, y_displace, font, screen):
         textSurf, textRect = self.text_objects(msg, color, font)
@@ -21,4 +22,43 @@ class TextToScreen(object):
 
     def text_objects(self, text, color, size):
         textSurface = size.render(text, True, color)
-        return textSurface, textSurface.get_rect()  
+        return textSurface, textSurface.get_rect()
+
+class Client():
+    def __init__(self,Adress=(constants.IP, constants.PORT)):
+        self.Adress = Adress
+    def sendData(self,Message):
+        self.s = socket.socket()
+        self.s.connect(self.Adress)
+        self.s.send(str(Message))
+    def getData(self):
+        self.s = socket.socket()
+        self.s.connect(self.Adress)
+        return  self.s.recv(20)
+
+class Server():
+    def __init__(self,Adress=('',constants.PORT),MaxClient=1):
+        self.s = socket.socket()
+        self.s.bind(Adress)
+        self.s.listen(MaxClient)
+
+    def getData(self):
+        self.Client, self.Adr=(self.s.accept())
+        back = self.Client.recv(20)
+        return back
+
+    def sendData(self, Message):
+        self.Client, self.Adr=(self.s.accept())
+        self.Client.send(str(Message))
+
+class Utils():
+    def __init__(self):
+        pass
+
+    def getLocation(self, eingabe):
+        eingabe = eingabe.translate(None, "() ") #Klammern enttfernen
+        eingabe = eingabe.split(",") #Am Komma aufteilen
+        eingabe = [ int(x) for x in eingabe ] #Nummern aus Strings machen
+        eingabe = tuple(eingabe) #Wieder ein tuple draus machen
+        eingabe = (eingabe + (25, 25)) #Zusammenfuehren
+        return eingabe #Ausgeben

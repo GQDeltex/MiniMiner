@@ -9,3 +9,7 @@ GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 COLORKEY = (255, 0, 255)
+
+SERVER = False
+IP = '127.0.0.1'
+PORT = 5000
