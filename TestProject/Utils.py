@@ -1,7 +1,7 @@
 import socket
 
 class Client():
-    def __init__(self,Adress=("127.0.0.1",5000)):
+    def __init__(self,Adress=("10.16.0.28",5000)):
         self.Adress = Adress
     def sendData(self,Message):
         self.s = socket.socket()
@@ -13,7 +13,7 @@ class Client():
         return  self.s.recv(20)
 
 class Server():
-    def __init__(self,Adress=('127.0.0.1',5000),MaxClient=1):
+    def __init__(self,Adress=('',5000),MaxClient=1):
         self.s = socket.socket()
         self.s.bind(Adress)
         self.s.listen(MaxClient)
