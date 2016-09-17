@@ -49,6 +49,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.location = (self.rect.x, self.rect.y)
 
         self.direction = 1
         self.anim = Animation.Animation(10)
@@ -103,19 +104,17 @@ class Player(pygame.sprite.Sprite):
                 self.rect.top = block.rect.bottom
 
     def sendData(self):
-        if self.rect.x, self.rect.y != location:
-            location = (self.rect.x, self.rect.y)
-            tosend = (self.rect.x, self.rect.y, self.direction)
-            if constants.SERVER:
-                self.server.sendData(tosend)
-            else:
-                self.client.sendData(tosend)
+        self.location = (self.rect.x, self.rect.y)
+        tosend = (self.rect.x, self.rect.y, self.direction)
+        if constants.SERVER:
+            self.server.sendData(tosend)
+        else:
+            self.client.sendData(tosend)
 
     def getData(self):
-        if self.rect.x, self.rect.y != location:
-            if constants.SERVER:
-                location = self.server.getData()
-                self.rect.x, self.rect.y, self.direction = self.utils.getLocation(location)
-            else:
-                location = self.client.getData()
-                self.rect.x, self.rect.y, self.direction = self.utils.getLocation(location)
+        if constants.SERVER:
+            self.location = self.server.getData()
+            self.rect.x, self.rect.y, self.direction = self.utils.getLocation(location)
+        else:
+            self.location = self.client.getData()
+            self.rect.x, self.rect.y, self.direction = self.utils.getLocation(location)
