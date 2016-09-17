@@ -38,17 +38,25 @@ class Client():
 
 class Server():
     def __init__(self,Adress=('',constants.PORT),MaxClient=1):
+        print "Creating socket"
         self.s = socket.socket()
+        print "Binding Adress"
         self.s.bind(Adress)
+        print "Set to listen"
         self.s.listen(MaxClient)
 
     def getData(self):
+        print "Accept Connection"
         self.Client, self.Adr=(self.s.accept())
+        print "Recieving Data"
         back = self.Client.recv(20)
+        print "Successfull"
         return back
 
     def sendData(self, Message):
+        print "Accept Connection"
         self.Client, self.Adr=(self.s.accept())
+        print "Sending Message"
         self.Client.send(str(Message))
 
 class Utils():

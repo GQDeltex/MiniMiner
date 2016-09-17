@@ -112,6 +112,7 @@ class Player(pygame.sprite.Sprite):
         if constants.SERVER:
             location = self.server.getData()
             location = Utils.Utils.getLocation(location)
+            x, y = location.split()
         else:
             location = self.client.getData()
             location = Utils.Utils.getLocation(location)
