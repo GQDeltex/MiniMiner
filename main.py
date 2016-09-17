@@ -101,8 +101,12 @@ def main():
         screen.fill(constants.BLACK)
         map.render(screen)
         player_01.update(wall_list)
-        player_01.sendData()
-        player_02.getData()
+        if constants.SERVER:
+            player_01.sendData()
+            player_02.getData()
+        else:
+            player_02.getData()
+            player_01.sendData()
         player_02.update(wall_list)
         all_sprite_list.draw(screen)
         clock.tick(60)
