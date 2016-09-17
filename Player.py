@@ -113,8 +113,8 @@ class Player(pygame.sprite.Sprite):
         if constants.SERVER:
             self.location = self.server.getData()
             self.location,  self.direction = self.utils.getLocation(self.location)
-            self.x, self.y = self.location
+            self.rect.x, self.rect.y = self.location
         else:
             self.location = self.client.getData()
             self.location, self.direction = self.utils.getLocation(self.location)
-            self.x, self.y = self.location
+            self.rect.x, self.rect.y = self.location

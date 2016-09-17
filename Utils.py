@@ -46,17 +46,17 @@ class Server():
         self.s.listen(MaxClient)
 
     def getData(self):
-        print "Accept Connection"
+        #print "Accept Connection"
         self.Client, self.Adr=(self.s.accept())
-        print "Recieving Data"
+        #print "Recieving Data"
         back = self.Client.recv(20)
-        print "Successfull"
+        #print "Successfull recieved:" + str(back)
         return back
 
     def sendData(self, Message):
-        print "Accept Connection"
+        #print "Accept Connection"
         self.Client, self.Adr=(self.s.accept())
-        print "Sending Message"
+        #print "Sending Message:" + str(Message)
         self.Client.send(str(Message))
 
 class Utils():
@@ -66,6 +66,8 @@ class Utils():
     def getLocation(self, eingabe):
         eingabe = eingabe.translate(None, "() ") #Klammern entfernen
         self.x, self.y, self.dir = eingabe.split(",") #Am Komma aufteilen
-        self.x = [ int(x) for x in self.x ] #Nummern aus Strings machen
-        self.y = [ int(x) for x in self.x ] #No.2
+        self.x = int(self.x) #Nummern aus Strings machen
+        self.y = int(self.y) #No.2
+        self.dir = int(self.dir)
+        print "X: " + str(self.x) + "Y:" + str(self.y) + "D:" + str(self.dir)
         return (self.x, self.y), self.dir #Ausgeben
