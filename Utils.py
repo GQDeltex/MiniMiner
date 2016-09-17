@@ -68,5 +68,4 @@ class Utils():
         self.x, self.y, self.dir = eingabe.split(",") #Am Komma aufteilen
         self.x = [ int(x) for x in self.x ] #Nummern aus Strings machen
         self.y = [ int(x) for x in self.x ] #No.2
-        eingabe = (self.x, self.y, self.dir) #Wieder ein tuple draus machen
-        return eingabe #Ausgeben
+        return (self.x, self.y), self.dir #Ausgeben
