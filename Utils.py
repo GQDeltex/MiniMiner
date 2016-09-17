@@ -65,8 +65,8 @@ class Utils():
 
     def getLocation(self, eingabe):
         eingabe = eingabe.translate(None, "() ") #Klammern enttfernen
-        eingabe = eingabe.split(",") #Am Komma aufteilen
-        eingabe = [ int(x) for x in eingabe ] #Nummern aus Strings machen
-        eingabe = tuple(eingabe) #Wieder ein tuple draus machen
-        eingabe = (eingabe + (25, 25)) #Zusammenfuehren
+        self.x, self.y, self.dir = eingabe.split(",") #Am Komma aufteilen
+        self.x = [ int(x) for x in self.x ] #Nummern aus Strings machen
+        self.y = [ int(x) for x in self.x ] #No.2
+        eingabe = tuple(self.x, self.y, self.dir) #Wieder ein tuple draus machen #Zusammenfuehren
         return eingabe #Ausgeben

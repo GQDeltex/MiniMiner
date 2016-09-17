@@ -15,6 +15,7 @@ class Player(pygame.sprite.Sprite):
 
         self.server = server
         self.client = client
+        self.utils = Utils()
 
         pygame.sprite.Sprite.__init__(self)
         sprite_sheet = SpriteSheet("tileset.png")
@@ -102,18 +103,19 @@ class Player(pygame.sprite.Sprite):
                 self.rect.top = block.rect.bottom
 
     def sendData(self):
-        location = (self.rect.x, self.rect.y)
-        if constants.SERVER:
-            self.server.sendData(location)
-        else:
-            self.client.sendData(location)
+        if self.rect.x, self.rect.y != location:
+            location = (self.rect.x, self.rect.y)
+            tosend = (self.rect.x, self.rect.y, self.direction)
+            if constants.SERVER:
+                self.server.sendData(tosend)
+            else:
+                self.client.sendData(tosend)
 
     def getData(self):
-        if constants.SERVER:
-            location = self.server.getData()
-            location = Utils.Utils.getLocation(location)
-            x, y = location.split()
-        else:
-            location = self.client.getData()
-            location = Utils.Utils.getLocation(location)
-            x, y = location.split()
+        if self.rect.x, self.rect.y != location:
+            if constants.SERVER:
+                location = self.server.getData()
+                self.rect.x, self.rect.y, self.direction = self.utils.getLocation(location)
+            else:
+                location = self.client.getData()
+                self.rect.x, self.rect.y, self.direction = self.utils.getLocation(location)
