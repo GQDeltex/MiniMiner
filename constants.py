@@ -10,6 +10,7 @@ BLUE = (0, 0, 255)
 RED = (255, 0, 0)
 COLORKEY = (255, 0, 255)
 
+MULTIPLAYER = False
 SERVER = True
 IP = '10.16.0.28'
 PORT = 5000

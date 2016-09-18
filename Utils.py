@@ -1,6 +1,7 @@
 import pygame
 import constants
 import socket
+from time import sleep
 
 class SpriteSheet():
     sprite_sheet = None
@@ -44,6 +45,7 @@ class Server():
         self.s.bind(Adress)
         print "Set to listen"
         self.s.listen(MaxClient)
+        sleep(0.5)
 
     def getData(self):
         #print "Accept Connection"

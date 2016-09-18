@@ -7,14 +7,13 @@ class Player(pygame.sprite.Sprite):
     change_x = 0
     change_y = 0
 
-    def __init__(self, x, y, coords_right_x, coords_right_y, coords_up_x, coords_up_y, server, client):
+    def __init__(self, x, y, coords_right_x, coords_right_y, coords_up_x, coords_up_y, network):
         self.left_frames = []
         self.right_frames = []
         self.up_frames = []
         self.down_frames = []
 
-        self.server = server
-        self.client = client
+        self.network = network
         self.utils = Utils()
 
         pygame.sprite.Sprite.__init__(self)
@@ -105,16 +104,16 @@ class Player(pygame.sprite.Sprite):
     def sendData(self):
         tosend = (self.rect.x, self.rect.y, self.direction)
         if constants.SERVER:
-            self.server.sendData(tosend)
+            self.network.sendData(tosend)
         else:
-            self.client.sendData(tosend)
+            self.network.sendData(tosend)
 
     def getData(self):
         if constants.SERVER:
-            self.location = self.server.getData()
+            self.location = self.network.getData()
             self.location,  self.direction = self.utils.getLocation(self.location)
             self.rect.x, self.rect.y = self.location
         else:
-            self.location = self.client.getData()
+            self.location = self.network.getData()
             self.location, self.direction = self.utils.getLocation(self.location)
             self.rect.x, self.rect.y = self.location
